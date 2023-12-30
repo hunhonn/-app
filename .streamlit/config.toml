@@ -1,0 +1,21 @@
+[theme]
+
+#primary colour
+
+primaryColor="#ff4b4b"
+
+#background colour
+
+backgroundColor="#0e1117"
+
+#sidebar and widget colour
+
+secondaryBackgroundColor="#bd4043"
+
+#text colour
+
+textColor="#fafafa"
+
+#font
+
+font= "sans serif"
