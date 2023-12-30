@@ -4,3 +4,4 @@ plotly.graph_objects
 streamlit_option_menu
 deta
 dotenv
+matplotlib
