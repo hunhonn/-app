@@ -1,4 +1,4 @@
 streamlit
 plotly
 deta
-dotenv
+python-dotenv
