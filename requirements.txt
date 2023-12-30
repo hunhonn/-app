@@ -2,3 +2,4 @@ streamlit
 plotly
 deta
 python-dotenv
+streamlit_option_menu
