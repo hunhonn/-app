@@ -73,7 +73,7 @@ if selected=="Graph":
     measure=rate_diff,
     x=formatted_times,base=rate_values[0]
     ))
-    fig.update_layout(title="$Rate vs Time")
+    fig.update_layout(title="$Rate vs Time",plot_bgcolor='white')
     
     fig3=go.Figure()
     fig3.add_trace(go.Scatter(
@@ -96,6 +96,7 @@ if selected=="Graph":
     yaxis_title="Price",
     legend_title="Data",
     )
+    fig3.update_layout(plot_bgcolor='white')
 
     st.plotly_chart(fig,use_container_width=True)
     st.plotly_chart(fig3,use_container_width=True)
