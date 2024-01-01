@@ -81,7 +81,7 @@ if selected=="Graph":
         y=total_rates['Rate'],
         mode='lines',
         name='Training Data',
-        line=dict(colour='blue')
+        line=dict(color='blue')
     ))
     fig3.add_trace(go.Scatter(
     x=predictions.index,
