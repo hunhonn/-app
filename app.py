@@ -22,13 +22,26 @@ hide_st_style="""
             """
 st.markdown(hide_st_style,unsafe_allow_html=True)          
 
+###functions
+def utc_to_sgt(utc_time_list):
+    sgt_offset = datetime.timedelta(hours=8)  # SGT offset is 8 hours ahead of UTC
+    sgt_time_list = []
+
+    for utc_time in utc_time_list:
+        # Add SGT offset to each UTC time and append to the SGT time list
+        sgt_time = utc_time + sgt_offset
+        sgt_time_list.append(sgt_time)
+
+    return sgt_time_list
+
 #database interface
 items=db.fetch_all()
 time_values=[item['time'] for item in items]
 rate_values=[item['rate']for item in items]
 sgt_offset=datetime.timedelta(hours=8)
 
-formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') + sgt_offset for epoch in time_values]
+formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values]
+formatted_sgt=utc_to_sgt(formatted_times)
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
 #Navigation
@@ -56,7 +69,7 @@ if selected=="Graph":
     fig=go.Figure(data=go.Waterfall(
     y=rate_diff,
     measure=rate_diff,
-    x=formatted_times,base=rate_values[0]
+    x=formatted_sgt,base=rate_values[0]
     ))
     fig.update_layout(title="$Rate vs Time")
     
@@ -67,5 +80,5 @@ elif selected=="Table":
     #table 
     rate_diff.insert(0,"-")
     fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate']),
-                                 cells=dict(values=[formatted_times,rate_values,rate_diff])))
+                                 cells=dict(values=[formatted_sgt,rate_values,rate_diff])))
     st.plotly_chart(fig1,use_container_width=True)
