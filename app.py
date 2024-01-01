@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 from streamlit_option_menu import option_menu
 import datetime
 import database as db
+import pandas as pd
 
 
 currency= ["SEK","SGD"]
@@ -33,6 +34,9 @@ rate_values=[item['rate']for item in items]
 formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values_sgt]
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
+#dataframe for prediction
+df=pd.DataFrame({'Epoch':time_values_sgt,'Timestamp':formatted_times,'Rate':rate_values})
+
 #Navigation
 selected=option_menu(
     menu_title= None,
@@ -52,9 +56,9 @@ if selected=="Graph":
 
     #creating chart
     
-    ####for line graph####
+    ####for prediction line graph####
     fig3=go.Figure(data=go.Scatter(x=formatted_times,y=rate_values,mode='lines+markers',name='$Rate vs Time'))
-    fig3.update_layout(title='Rate vs Time',xaxis_title='datetime',yaxis_title='$Rate',margin=dict(l=0,r=0,t=5,b=5))
+    fig3.update_layout(title='Prediction interval',xaxis_title='datetime',yaxis_title='$Rate',margin=dict(l=0,r=0,t=5,b=5))
 
     fig=go.Figure(data=go.Waterfall(
     y=rate_diff,
