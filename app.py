@@ -26,9 +26,10 @@ st.markdown(hide_st_style,unsafe_allow_html=True)
 #database interface
 items=db.fetch_all()
 time_values=[item['time'] for item in items]
+time_values_sgt=[times + 28800 for times in time_values]
 rate_values=[item['rate']for item in items]
 
-formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values]
+formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values_sgt]
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
 #Navigation
