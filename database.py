@@ -13,4 +13,3 @@ db=deta.Base("currency_db")
 def fetch_all():
     res=db.fetch()
     return res.items
-

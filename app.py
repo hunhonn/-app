@@ -4,7 +4,7 @@ from streamlit_option_menu import option_menu
 import datetime
 import database as db
 import pandas as pd
-
+from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 currency= ["SEK","SGD"]
 page_title= "SGD to SEK Currency Tracker"
@@ -35,7 +35,17 @@ formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
 #dataframe for prediction
-df=pd.DataFrame({'Epoch':time_values_sgt,'Timestamp':formatted_times,'Rate':rate_values})
+data=pd.read_csv("https://raw.githubusercontent.com/hunhonn/-app/main/SGD_SEK%20Historical%20Data.csv")
+historical_rate=data['Price'].values.tolist()
+new_rate=rate_values[13:]
+total_rates=pd.DataFrame({'Rate':historical_rate+new_rate})
+
+#ML
+p,d,q=(0,1,0)
+model = SARIMAX(total_rates, order=(p, d, q), 
+                seasonal_order=(p, d, q, 52))
+fitted=model.fit()
+predictions=fitted.predict(len(total_rates),len(total_rates)+60)
 
 #Navigation
 selected=option_menu(
@@ -57,8 +67,6 @@ if selected=="Graph":
     #creating chart
     
     ####for prediction line graph####
-    fig3=go.Figure(data=go.Scatter(x=formatted_times,y=rate_values,mode='lines+markers',name='$Rate vs Time'))
-    fig3.update_layout(title='Prediction interval',xaxis_title='datetime',yaxis_title='$Rate',margin=dict(l=0,r=0,t=5,b=5))
 
     fig=go.Figure(data=go.Waterfall(
     y=rate_diff,
@@ -67,6 +75,28 @@ if selected=="Graph":
     ))
     fig.update_layout(title="$Rate vs Time")
     
+    fig3=go.Figure()
+    fig3.add_trace(go.Scatter(
+        x=total_rates.index,
+        y=total_rates['Rate'],
+        mode='lines',
+        name='Training Data',
+        line=dict(colour='blue')
+    ))
+    fig3.add_trace(go.Scatter(
+    x=predictions.index,
+    y=predictions,
+    mode='lines',
+    name='Predictions',
+    line=dict(color='green')
+    ))
+    fig3.update_layout(
+    title="SEK Rate - SARIMA Prediction",
+    xaxis_title="Date",
+    yaxis_title="Price",
+    legend_title="Data",
+    )
+
     st.plotly_chart(fig,use_container_width=True)
     st.plotly_chart(fig3,use_container_width=True)
 

@@ -4,3 +4,4 @@ deta
 python-dotenv
 streamlit_option_menu
 pandas
+statsmodels
