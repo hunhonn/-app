@@ -45,7 +45,8 @@ if selected=="Graph":
     
     col1, col2= st.columns(2)
     col1.metric("Latest rate",f"{round(items[-1]['rate'],3)}")
-    utc_time=datetime.datetime.utcfromtimestamp(items[-1]['time']).strftime('%H:%M %d/%m/%y')
+    #utc_time=datetime.datetime.utcfromtimestamp(items[-1]['time']).strftime('%H:%M %d/%m/%y')
+    utc_time=formatted_times[-1]
     col2.metric("Time",f"{utc_time}")
 
     #creating chart
