@@ -73,7 +73,7 @@ if selected=="Graph":
     measure=rate_diff,
     x=formatted_times,base=rate_values[0]
     ))
-    fig.update_layout(title="$Rate vs Time",plot_bgcolor='white')
+    fig.update_layout(title="$Rate vs Time")
     
     fig3=go.Figure()
     fig3.add_trace(go.Scatter(
