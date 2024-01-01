@@ -5,6 +5,3 @@ python-dotenv
 streamlit_option_menu
 pandas
 statsmodels
-numpy
-scipy
-patsy

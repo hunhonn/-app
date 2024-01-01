@@ -4,7 +4,7 @@ from streamlit_option_menu import option_menu
 import datetime
 import database as db
 import pandas as pd
-from statsmodels.tsa.statespace.sarimax import SARIMAX
+import statsmodels.api as sm
 
 currency= ["SEK","SGD"]
 page_title= "SGD to SEK Currency Tracker"
@@ -42,7 +42,7 @@ total_rates=pd.DataFrame({'Rate':historical_rate+new_rate})
 
 #ML
 p,d,q=(0,1,0)
-model = SARIMAX(total_rates, order=(p, d, q), 
+model = sm.tsa.SARIMAX(total_rates, order=(p, d, q), 
                 seasonal_order=(p, d, q, 52))
 fitted=model.fit()
 predictions=fitted.predict(len(total_rates),len(total_rates)+60)
