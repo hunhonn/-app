@@ -28,7 +28,7 @@ time_values=[item['time'] for item in items]
 rate_values=[item['rate']for item in items]
 sgt_offset=datetime.timedelta(hours=8)
 
-formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values]
+formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') + sgt_offset for epoch in time_values]
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
 #Navigation
@@ -44,7 +44,6 @@ if selected=="Graph":
     
     col1, col2= st.columns(2)
     col1.metric("Latest rate",f"{round(items[-1]['rate'],3)}")
-    #TODO add timezone
     utc_time=datetime.datetime.utcfromtimestamp(items[-1]['time']).strftime('%H:%M %d/%m/%y')
     col2.metric("Time",f"{utc_time+sgt_offset}")
 
