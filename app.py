@@ -4,6 +4,7 @@ from streamlit_option_menu import option_menu
 import datetime
 import database as db
 
+
 currency= ["SEK","SGD"]
 page_title= "SGD to SEK Currency Tracker"
 page_icon= ":money_with_wings:"
@@ -52,8 +53,8 @@ if selected=="Graph":
     #creating chart
     
     ####for line graph####
-    #fig=go.Figure(data=go.Scatter(x=formatted_times,y=rate_values,mode='lines+markers',name='$Rate vs Time'))
-    #fig.update_layout(title='Rate vs Time',xaxis_title='datetime',yaxis_title='$Rate',margin=dict(l=0,r=0,t=5,b=5))
+    fig3=go.Figure(data=go.Scatter(x=formatted_times,y=rate_values,mode='lines+markers',name='$Rate vs Time'))
+    fig3.update_layout(title='Rate vs Time',xaxis_title='datetime',yaxis_title='$Rate',margin=dict(l=0,r=0,t=5,b=5))
 
     fig=go.Figure(data=go.Waterfall(
     y=rate_diff,
@@ -63,6 +64,7 @@ if selected=="Graph":
     fig.update_layout(title="$Rate vs Time")
     
     st.plotly_chart(fig,use_container_width=True)
+    st.plotly_chart(fig3,use_container_width=True)
 
 elif selected=="Table":
     st.header("dataframe")
