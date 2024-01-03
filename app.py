@@ -109,10 +109,8 @@ elif selected=="Table":
     rate_diff.insert(0,"-")
     percent_diff=[round(((rate_values[i+1]/rate_values[i])*100)-100,2) for i in range(len(rate_values)-1)]
     percent_diff.insert(0,"-")
-    formatted_times.reverse()
-    rate_values.reverse()
-    rate_diff.reverse()
-    percent_diff.reverse()
+
     fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%']),
-                                 cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff])))
+                                 cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
+                                            font_size=20)))
     st.plotly_chart(fig1,use_container_width=True)
