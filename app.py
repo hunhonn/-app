@@ -112,5 +112,6 @@ elif selected=="Table":
 
     fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%']),
                                  cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
-                                            font_size=20)))
+                                            font_size=20,
+                                            height=35)))
     st.plotly_chart(fig1,use_container_width=True)
