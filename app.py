@@ -110,7 +110,9 @@ elif selected=="Table":
     percent_diff=[round(((rate_values[i+1]/rate_values[i])*100)-100,2) for i in range(len(rate_values)-1)]
     percent_diff.insert(0,"-")
 
-    fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%']),
+    fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%'],
+                                            font_size=20,
+                                            height=35),
                                  cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
                                             font_size=20,
                                             height=35)))
