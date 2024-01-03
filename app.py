@@ -34,11 +34,6 @@ rate_values=[item['rate']for item in items]
 formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values_sgt]
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
-#reverse lists for dataframe
-timestamp=formatted_times.reverse()
-rate_values2=rate_values.reverse()
-rate_diff2=rate_diff.reverse()
-
 
 #dataframe for prediction
 data=pd.read_csv("https://raw.githubusercontent.com/hunhonn/-app/main/SGD_SEK%20Historical%20Data.csv")
@@ -120,7 +115,7 @@ elif selected=="Table":
     fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%'],
                                             font_size=20,
                                             height=35),
-                                 cells=dict(values=[timestamp,rate_values2,rate_diff2,percent_diff2],
+                                 cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
                                             font_size=20,
                                             height=35)))
     st.plotly_chart(fig1,use_container_width=True)
