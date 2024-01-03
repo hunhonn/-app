@@ -102,9 +102,10 @@ if selected=="Graph":
     st.plotly_chart(fig3,use_container_width=True)
 
 elif selected=="Table":
-    st.header("dataframe")
-    #table 
+    st.header("SGD to SEK Dataset")
+    #table
     rate_diff.insert(0,"-")
-    fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate']),
-                                 cells=dict(values=[formatted_times,rate_values,rate_diff])))
+    percent_diff=[round(((rate_values[i+1]/rate_values[i])*100)-100,2) for i in range(len(rate_values)-1)]
+    fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%']),
+                                 cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff])))
     st.plotly_chart(fig1,use_container_width=True)
