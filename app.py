@@ -74,6 +74,7 @@ if selected=="Graph":
         x=formatted_times,base=rate_values[0]
         ))
         fig.update_layout(title="$Rate vs Time")
+        st.plotly_chart(fig,use_container_width=True)
     
     with col2:
         ####for prediction line graph####
@@ -100,7 +101,6 @@ if selected=="Graph":
         )
         fig3.update_layout(plot_bgcolor='white')
 
-        st.plotly_chart(fig,use_container_width=True)
         st.plotly_chart(fig3,use_container_width=True)
 
 elif selected=="Table":
