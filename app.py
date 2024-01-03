@@ -9,7 +9,7 @@ import statsmodels.api as sm
 currency= ["SEK","SGD"]
 page_title= "SGD to SEK Currency Tracker"
 page_icon= ":money_with_wings:"
-layout="centered"
+layout="wide"
 
 st.set_page_config(page_title=page_title,page_icon=page_icon,layout=layout)
 st.title(page_title+ " " +page_icon)
