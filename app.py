@@ -59,6 +59,7 @@ if selected=="Graph":
     st.header("Graph Visualization")
     
     col1, col2= st.columns(2)
+
     col1.metric("Latest rate",f"{round(items[-1]['rate'],3)}")
     #utc_time=datetime.datetime.utcfromtimestamp(items[-1]['time']).strftime('%H:%M %d/%m/%y')
     utc_time=formatted_times[-1]
@@ -66,40 +67,41 @@ if selected=="Graph":
 
     #creating chart
     
-    ####for prediction line graph####
-
-    fig=go.Figure(data=go.Waterfall(
-    y=rate_diff,
-    measure=rate_diff,
-    x=formatted_times,base=rate_values[0]
-    ))
-    fig.update_layout(title="$Rate vs Time")
+    with col1:
+        fig=go.Figure(data=go.Waterfall(
+        y=rate_diff,
+        measure=rate_diff,
+        x=formatted_times,base=rate_values[0]
+        ))
+        fig.update_layout(title="$Rate vs Time")
     
-    fig3=go.Figure()
-    fig3.add_trace(go.Scatter(
-        x=total_rates.index,
-        y=total_rates['Rate'],
+    with col2:
+        ####for prediction line graph####
+        fig3=go.Figure()
+        fig3.add_trace(go.Scatter(
+            x=total_rates.index,
+            y=total_rates['Rate'],
+            mode='lines',
+            name='Training Data',
+            line=dict(color='blue')
+        ))
+        fig3.add_trace(go.Scatter(
+        x=predictions.index,
+        y=predictions,
         mode='lines',
-        name='Training Data',
-        line=dict(color='blue')
-    ))
-    fig3.add_trace(go.Scatter(
-    x=predictions.index,
-    y=predictions,
-    mode='lines',
-    name='Predictions',
-    line=dict(color='green')
-    ))
-    fig3.update_layout(
-    title="SEK Rate - SARIMA Prediction",
-    xaxis_title="Date",
-    yaxis_title="Price",
-    legend_title="Data",
-    )
-    fig3.update_layout(plot_bgcolor='white')
+        name='Predictions',
+        line=dict(color='green')
+        ))
+        fig3.update_layout(
+        title="SEK Rate - SARIMA Prediction",
+        xaxis_title="Date",
+        yaxis_title="Price",
+        legend_title="Data",
+        )
+        fig3.update_layout(plot_bgcolor='white')
 
-    st.plotly_chart(fig,use_container_width=True)
-    st.plotly_chart(fig3,use_container_width=True)
+        st.plotly_chart(fig,use_container_width=True)
+        st.plotly_chart(fig3,use_container_width=True)
 
 elif selected=="Table":
     st.header("SGD to SEK Dataset")
