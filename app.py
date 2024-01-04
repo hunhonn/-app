@@ -45,7 +45,7 @@ df=pd.DataFrame({
     'Δrate':rate_diff,
     'Δrate,%':percent_diff
 })
-
+reversed_df=df[::-1]
 #dataframe for prediction
 data=pd.read_csv("https://raw.githubusercontent.com/hunhonn/-app/main/SGD_SEK%20Historical%20Data.csv")
 historical_rate=data['Price'].values.tolist()
@@ -129,7 +129,7 @@ elif selected=="Table":
     fig1=go.Figure(data=go.Table(header=dict(values=list(df.columns),
                                              font_size=20,
                                              height=35),
-                                cells=dict(values=[df.timestamp,df["SGD to SEK rate"],df["Δrate"],df['Δrate,%']],
+                                cells=dict(values=[reversed_df.timestamp,reversed_df["SGD to SEK rate"],reversed_df["Δrate"],reversed_df['Δrate,%']],
                                            font_size=20,
                                            height=35)))
 
