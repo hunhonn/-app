@@ -34,6 +34,17 @@ rate_values=[item['rate']for item in items]
 formatted_times = [datetime.datetime.fromtimestamp(epoch).strftime('%H:%M %d/%m/%y') for epoch in time_values_sgt]
 rate_diff = [items[i + 1]['rate'] - items[i]['rate'] for i in range(len(items) - 1)]
 
+#table
+rate_diff.insert(0,"-")
+percent_diff=[round(((rate_values[i+1]/rate_values[i])*100)-100,2) for i in range(len(rate_values)-1)]
+percent_diff.insert(0,"-")
+
+df=pd.DataFrame({
+    "timestamp":formatted_times,
+    'SGD to SEK rate':rate_values,
+    'Δrate':rate_diff,
+    'Δrate,%':percent_diff
+})
 
 #dataframe for prediction
 data=pd.read_csv("https://raw.githubusercontent.com/hunhonn/-app/main/SGD_SEK%20Historical%20Data.csv")
@@ -107,16 +118,19 @@ if selected=="Graph":
 
 elif selected=="Table":
     st.header("SGD to SEK Dataset")
-    #table
-    rate_diff.insert(0,"-")
-    percent_diff=[round(((rate_values[i+1]/rate_values[i])*100)-100,2) for i in range(len(rate_values)-1)]
-    percent_diff.insert(0,"-")
 
-
-    fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%'],
+    '''fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%'],
                                             font_size=20,
                                             height=35),
                                  cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
                                             font_size=20,
-                                            height=35)))
+                                            height=35)))'''
+    
+    fig1=go.Figure(data=go.Table(header=dict(values=list(df.columns),
+                                             font_size=20,
+                                             height=35),
+                                cells=dict(values=[df.timestamp,df["SGD to SEK rate"],df["Δrate"],df['Δrate,%']],
+                                           font_size=20,
+                                           height=35)))
+
     st.plotly_chart(fig1,use_container_width=True)
