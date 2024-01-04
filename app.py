@@ -118,13 +118,6 @@ if selected=="Graph":
 
 elif selected=="Table":
     st.header("SGD to SEK Dataset")
-
-    '''fig1=go.Figure(data=go.Table(header=dict(values=['timestamp','SGD to SEK rate','Δrate','Δrate,%'],
-                                            font_size=20,
-                                            height=35),
-                                 cells=dict(values=[formatted_times,rate_values,rate_diff,percent_diff],
-                                            font_size=20,
-                                            height=35)))'''
     
     fig1=go.Figure(data=go.Table(header=dict(values=list(df.columns),
                                              font_size=20,
